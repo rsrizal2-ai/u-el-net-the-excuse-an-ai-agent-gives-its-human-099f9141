@@ -67,6 +67,12 @@ if (ENTRY_LINE.length > MAX_ENTRY_CHARS) {
   );
 }
 
+// The gate also says one line: reject any line break, so a stray newline
+// can never turn the entry into two lines.
+if (ENTRY_LINE.includes("\n") || ENTRY_LINE.includes("\r")) {
+  fail("entry line must be a single line, no line breaks");
+}
+
 // The platform provides the output directory in MAKEFUN_OUTPUT_DIR; the
 // documented fallback for a local run is /output.
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
